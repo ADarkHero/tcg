@@ -299,3 +299,10 @@ msgstr "Kartennummer"
 # ######################################
 msgid "Cardsets"
 msgstr "Kartensets"
+
+# ######################################
+# Games
+# games.php
+# ######################################
+msgid "Give 7 random cards"
+msgstr "Erhalte 7 zufällige Karten"

@@ -46,7 +46,6 @@ if(isset($_GET["storage"])){
 ?>
 </ul>
 
-<div class="container">
 <div class="row">
     <?php
         $sql = "SELECT MasterShortName, CardMasterSubID "
@@ -59,22 +58,10 @@ if(isset($_GET["storage"])){
         $statement = $pdo->prepare($sql);
         $result = $statement->execute();
         while($row = $statement->fetch()) {
-        ?>
-            <div class="col-xs-3 col-sm-2 col-lg-1">
-                <a href="#" target="_blank">
-                    <figure class="figure">
-                        <img width="100%" src="img/cards/<?php echo $row['MasterShortName'].$row['CardMasterSubID']; ?>.jpg" 
-                             class="figure-img img-fluid rounded" 
-                             alt="<?php echo $row['MasterShortName'].$row['CardMasterSubID']; ?>">
-                        <figcaption class="figure-caption"><?php echo $row['MasterShortName'].$row['CardMasterSubID']; ?></figcaption>
-                    </figure>
-                </a>
-            </div>    
-        <?php
+            displayCard($row['MasterShortName'], $row['CardMasterSubID']); 
         }
     ?> 
     
-</div>
 </div>
 </div>
 </div>

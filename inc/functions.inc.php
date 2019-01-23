@@ -92,3 +92,45 @@ function error($error_msg) {
 	include("templates/footer.inc.php");
 	exit();
 }
+
+/**
+* Displays a card
+*/
+function displayCard($shortname, $id){
+    $cardname = $shortname.$id;
+    ?>
+    <div class="col-xs-3 col-sm-2 col-lg-1">
+        <a href="#" target="_blank">
+            <figure class="figure">
+                <img width="100%" src="<?php echo $GLOBALS['basepath']; ?>img/cards/<?php echo $cardname; ?>.jpg" 
+                     class="figure-img img-fluid rounded" 
+                     alt="<?php echo $cardname; ?>">
+                <figcaption class="figure-caption"><?php echo $cardname; ?></figcaption>
+            </figure>
+        </a>
+    </div> 
+<?php
+}
+
+/**
+* Gives the user random cards
+*/
+function giveRandomCards($quantity){
+    $sql = "SELECT cards.CardID, cards.MasterID, cards.CardMasterSubID, cards.RarityID, masters.MasterShortName "
+            . "FROM cards "
+            . "INNER JOIN masters ON cards.MasterID = masters.MasterID "
+            . "INNER JOIN rarities ON rarities.RarityID = cards.RarityID "
+            . "ORDER BY RAND() LIMIT ".$quantity;
+    $statement = $GLOBALS['pdo']->prepare($sql);
+    $result = $statement->execute();
+    while($row = $statement->fetch()) {
+        displayCard($row['MasterShortName'], $row['CardMasterSubID']);
+        
+        $sql = "INSERT INTO usersxcards (UserID, CardID, StorageID) "
+            . "VALUES (".$GLOBALS['user']['id'].", ".$row['CardID'].", ".$GLOBALS['basestorage'].")";
+        $statement = $GLOBALS['pdo']->prepare($sql);
+        $result = $statement->execute();
+    }
+    
+    
+}

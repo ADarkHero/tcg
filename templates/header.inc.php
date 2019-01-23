@@ -20,6 +20,7 @@
     bindtextdomain($domain, "Locale");
     textdomain($domain); 
     
+     $GLOBALS['basepath'] = "/tcg/";
 ?>
 
 <!DOCTYPE html>
@@ -32,13 +33,13 @@
     <title>Loginscript</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/bootstrap-theme.css"> 
+    <link href="<?php echo $GLOBALS['basepath']; ?>css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="<?php echo $base; ?>css/bootstrap-theme.css"> 
     
     
 
     <!-- Custom styles for this template -->
-    <link href="css/style.css" rel="stylesheet">
+    <link href="<?php echo $GLOBALS['basepath']; ?>css/style.css" rel="stylesheet">
   </head>
   <body>
   
@@ -87,11 +88,11 @@
         <?php else: ?>
         <div id="navbar" class="navbar-collapse collapse">
          <ul class="nav navbar-nav navbar-right">    
-            <li><a href="cards.php"><?php echo _("Your cards"); ?></a></li> 
-            <li><a href="sets.php"><?php echo _("Cardset"); ?></a></li>
-            <li><a href="games.php"><?php echo _("Games"); ?></a></li>
-            <li><a href="settings.php"><?php echo _("Settings"); ?></a></li>
-            <li><a href="logout.php">Logout</a></li>
+            <li><a href="<?php echo $GLOBALS['basepath']; ?>cards.php"><?php echo _("Your cards"); ?></a></li> 
+            <li><a href="<?php echo $GLOBALS['basepath']; ?>sets.php"><?php echo _("Cardset"); ?></a></li>
+            <li><a href="<?php echo $GLOBALS['basepath']; ?>games.php"><?php echo _("Games"); ?></a></li>
+            <li><a href="<?php echo $GLOBALS['basepath']; ?>settings.php"><?php echo _("Settings"); ?></a></li>
+            <li><a href="<?php echo $GLOBALS['basepath']; ?>logout.php">Logout</a></li>
           </ul>   
         </div><!--/.navbar-collapse -->
         <?php endif; ?>

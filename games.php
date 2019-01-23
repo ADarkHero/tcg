@@ -13,13 +13,30 @@ include("templates/header.inc.php");
 <div class="container main-container">
 
 <h1><?php echo _("Games"); ?></h1>
-
 <div class="panel panel-default">
     
-    
+<?php
+    getGames();
+?>
     
 </div>
 </div>
 <?php 
-include("templates/footer.inc.php")
+include("templates/footer.inc.php");
+
+//Every game has a php file in the games directory
+//This function displayes them
+function getGames(){
+    $files = scandir("games");
+    
+    
+    foreach($files as $file){
+        if(\strpos($file, '.php') !== false){
+            ?>
+                <a href="<?php echo "games/".$file; ?>"><?php echo _(substr($file, 0, -4)); ?></a>
+                <br>
+            <?php
+        }
+    }
+}
 ?>
