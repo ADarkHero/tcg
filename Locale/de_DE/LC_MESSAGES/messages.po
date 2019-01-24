@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2019-01-23 09:23+0100\n"
-"PO-Revision-Date: 2019-01-23 14:42+0100\n"
+"PO-Revision-Date: 2019-01-24 10:06+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -303,9 +303,6 @@ msgstr "alert(\"Es gab einen Fehler beim Verschieben der Karte.\");"
 # Sets
 # sets.php
 # ######################################
-msgid "Cardsets"
-msgstr "Kartensets"
-
 # ######################################
 # Games
 # games.php

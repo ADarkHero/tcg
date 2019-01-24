@@ -159,13 +159,12 @@ function giveRandomCards($quantity){
         
         $sql = "INSERT INTO usersxcards (UserID, CardID, StorageID) "
             . "VALUES (".$GLOBALS['user']['id'].", ".$row['CardID'].", ".$GLOBALS['basestorage'].")";
-        $statement = $GLOBALS['pdo']->prepare($sql);
-        $result = $statement->execute();
+        $state = $GLOBALS['pdo']->prepare($sql);
+        $result = $state->execute();
     }
     ?>
     </div>    
     <?php
-        
 }
 
 /**

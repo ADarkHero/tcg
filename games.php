@@ -14,11 +14,13 @@ include("templates/header.inc.php");
 
 <h1><?php echo _("Games"); ?></h1>
 <div class="panel panel-default">
+<div class="container-fluid mt-2">
     
 <?php
     getGames();
 ?>
     
+</div>
 </div>
 </div>
 <?php 
