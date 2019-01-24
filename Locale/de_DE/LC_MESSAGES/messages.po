@@ -275,8 +275,8 @@ msgid "Old password"
 msgstr "Altes Passwort"
 
 # ######################################
-# Cards
-# cards.php
+# User
+# user.php
 # ######################################
 msgid "Cards"
 msgstr "Karten"
@@ -298,6 +298,9 @@ msgstr "Kartennummer"
 
 msgid "alert(\"There was a error while moving the card.\");"
 msgstr "alert(\"Es gab einen Fehler beim Verschieben der Karte.\");"
+
+msgid "Trade"
+msgstr "Tauschen"
 
 # ######################################
 # Sets

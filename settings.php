@@ -96,10 +96,10 @@ endif;
 <div>
 
   <!-- Nav tabs -->
-  <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#data" aria-controls="home" role="tab" data-toggle="tab"><?php echo _("Personal data"); ?></a></li>
-    <li role="presentation"><a href="#email" aria-controls="profile" role="tab" data-toggle="tab">E-Mail</a></li>
-    <li role="presentation"><a href="#password" aria-controls="messages" role="tab" data-toggle="tab"><?php echo _("Password"); ?></a></li>
+  <ul class="nav nav-tabs">
+    <li class="nav-item"><a href="#data" class="nav-link active" aria-controls="home" role="tab" data-toggle="tab"><?php echo _("Personal data"); ?></a></li>
+    <li class="nav-item"><a href="#email" class="nav-link" aria-controls="profile" role="tab" data-toggle="tab">E-Mail</a></li>
+    <li class="nav-item"><a href="#password" class="nav-link" aria-controls="messages" role="tab" data-toggle="tab"><?php echo _("Password"); ?></a></li>
   </ul>
 
   <!-- Persönliche Daten-->

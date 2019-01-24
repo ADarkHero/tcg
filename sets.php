@@ -10,53 +10,49 @@ $user = check_user();
 include("templates/header.inc.php");
 ?>
 
-<div class="container main-container">
+<div class="container">
 
-<h1><?php echo _("Cardsets"); ?></h1>
+    <h1><?php echo _("Cardsets"); ?></h1>
 
-<div class="panel panel-default">
- 
 
-<?php 
-$categoryID = 1;
-if(isset($_GET["category"])){
-    $categoryID = htmlspecialchars($_GET["category"]);
-}
 
-?>
-
-<ul class="nav nav-tabs">
-<?php
-
-    $sql = "SELECT * FROM categories";
-    $statement = $pdo->prepare($sql);
-    $result = $statement->execute();
-    while($row = $statement->fetch()) {
-    ?>
-    <li class="nav-item <?php if($categoryID == $row["CategoryID"]){ echo "active"; }?>">
-        <a class="nav-link" href="sets.php?category=<?php echo $row["CategoryID"]; ?>">
-            <?php echo $row["CategoryName"]; ?>
-        </a>
-    </li>
     <?php
+    $categoryID = 1;
+    if (isset($_GET["category"])) {
+        $categoryID = htmlspecialchars($_GET["category"]);
     }
-
-?>
-</ul>
-
-<div class="container-fluid mt-2">
-    <?php
-        $sql = "SELECT MasterID, MasterShortName FROM masters "
-                . "WHERE CategoryID = ".$categoryID;
+    ?>
+    <ul class="nav nav-tabs">
+        <?php
+        $sql = "SELECT * FROM categories";
         $statement = $pdo->prepare($sql);
         $result = $statement->execute();
-        while($row = $statement->fetch()) {
+        while ($row = $statement->fetch()) {
+            ?>
+            <li class="nav-item">
+                <a class="nav-link <?php if ($categoryID == $row["CategoryID"]) {
+            echo "active";
+        } ?>" href="sets.php?category=<?php echo $row["CategoryID"]; ?>">
+                    <?php echo $row["CategoryName"]; ?>
+                </a>
+            </li>
+            <?php
+        }
+        ?>
+    </ul>
+
+    <div class="container-fluid mt-2">
+        <?php
+        $sql = "SELECT MasterID, MasterShortName FROM masters "
+                . "WHERE CategoryID = " . $categoryID;
+        $statement = $pdo->prepare($sql);
+        $result = $statement->execute();
+        while ($row = $statement->fetch()) {
             displayCardSet($row['MasterShortName'], $row['MasterID']);
         }
-    ?> 
+        ?> 
+    </div>
 </div>
-</div>
-</div>
-<?php 
+<?php
 include("templates/footer.inc.php")
 ?>

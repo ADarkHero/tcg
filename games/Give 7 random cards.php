@@ -15,11 +15,10 @@ include("../templates/header.inc.php");
 
 <h1><?php echo _("Give 7 random cards"); ?></h1>
 
-<div class="panel panel-default">
 <?php
     giveRandomCards(7, $pdo);
 ?>
-</div>
+
 </div>
 <?php 
 include("../templates/footer.inc.php")
