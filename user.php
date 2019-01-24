@@ -38,7 +38,8 @@ include("templates/header.inc.php");
             . "INNER JOIN cards ON usersxcards.CardID = cards.CardID "
             . "INNER JOIN masters ON cards.MasterID = masters.MasterID "
             . "WHERE UserID = ".$userNumber." "
-            . "AND usersxcards.StorageID = ".$storageID." ";
+            . "AND usersxcards.StorageID = ".$storageID." "
+            . "ORDER BY MasterShortName, cards.CardID";
         $statement = $pdo->prepare($sql);
         $result = $statement->execute();
         while($row = $statement->fetch()) {
