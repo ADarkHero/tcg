@@ -261,6 +261,33 @@ function listAllCards() {
 }
 
 /**
+ * Displays all your trades
+ * @param boolean $who true: Trade sent | false: Trade received
+ */
+function listYourTrades($who){
+    $uid = $GLOBALS["user"]["id"];
+    
+    $sr = "TradeUserSelf";
+    if(!$who){
+       $sr = "TradeUserOther"; 
+    }
+    
+    $sql = "SELECT * FROM trades "
+            . "WHERE ".$sr." = ".$uid." "
+            . "AND TradeOpen = 1";
+    $statement = $GLOBALS['pdo']->prepare($sql);
+    $result = $statement->execute();
+    while ($row = $statement->fetch()) {
+        echo "TradeUserSelf: ".$row["TradeUserSelf"]." ";
+        echo "TradeUserOther: ".$row["TradeUserOther"]." ";
+        echo "TradeCardSelf: ".$row["TradeCardSelf"]." ";
+        echo "TradeCardOther: ".$row["TradeCardOther"]." ";
+        echo $sr;
+        echo "<br>";
+    }
+}
+
+/**
  * Returns the current storage id
  */
 function getStorageID() {

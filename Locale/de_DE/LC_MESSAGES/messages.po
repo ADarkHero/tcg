@@ -55,7 +55,7 @@ msgstr "Spiele"
 msgid "Home"
 msgstr "Startseite"
 
-msgid "Your Trades"
+msgid "Your trades"
 msgstr "Tauschanfragen"
 
 # ######################################
@@ -313,9 +313,16 @@ msgstr "Tausch anfragen"
 
 
 # ######################################
-# Sets
-# sets.php
+# Trades
+# trades.php
 # ######################################
+
+msgid "Received trades"
+msgstr "Erhaltene Tauschanfragen"
+
+msgid "Sent trades"
+msgstr "Gesendete Tauschanfragen"
+
 # ######################################
 # Games
 # games.php
