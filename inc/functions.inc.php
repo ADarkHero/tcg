@@ -189,8 +189,8 @@ function generateStorages($uid){
                 echo ' ondragover="allowDrop(event)"';
             }
         ?>        
-        class="nav-item <?php if($storageID == $row["StorageID"]){ echo "active"; }?>">
-        <a class="nav-link" href="user.php?storage=<?php echo $row["StorageID"]; ?>&id=<?php echo $uid; ?>">
+        class="<?php if($storageID == $row["StorageID"]){ echo "active"; }?>">
+        <a  href="user.php?storage=<?php echo $row["StorageID"]; ?>&id=<?php echo $uid; ?>">
             <?php echo $row["StorageName"]; ?>
         </a>
     </li>

@@ -19,16 +19,18 @@ include("templates/header.inc.php");
     }
 ?>
     
+
 <h1><?php echo getUsername($userNumber)."'s "._("profile"); ?></h1>
 
-<div class="panel panel-default">
-    
-<ul class="nav nav-tabs">
+<ul class="nav nav-pills nav-stacked flex-column fixed-left">
 <?php 
     generateStorages($userNumber);
     $storageID = getStorageID();
 ?>
 </ul>
+    
+
+<div class="panel panel-default">
 
 <div class="container-fluid mt-2">
     <?php
