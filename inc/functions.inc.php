@@ -96,13 +96,17 @@ function error($error_msg) {
 /**
 * Displays a card
 */
-function displayCard($shortname, $id){
-    $cardname = $shortname.$id;
+function displayCard($shortname, $masterid, $id){
+    $cardname = $shortname.$masterid;
     ?>
-    <div class="col-xs-3 col-sm-2 col-lg-1">
+    <div class="col-xs-3 col-sm-2 col-lg-1" id="<?php echo $cardname; ?>">
         <a href="#" target="_blank">
             <figure class="figure">
-                <img width="100%" src="<?php echo $GLOBALS['basepath']; ?>img/cards/<?php echo $cardname; ?>.jpg" 
+                <img width="100%" draggable="true" 
+                     ondragstart="drag(event, 
+                     '<?php echo $id; ?>',
+                     '<?php echo $cardname; ?>')" 
+                     src="<?php echo $GLOBALS['basepath']; ?>img/cards/<?php echo $cardname; ?>.jpg" 
                      class="figure-img img-fluid rounded" 
                      alt="<?php echo $cardname; ?>">
                 <figcaption class="figure-caption"><?php echo $cardname; ?></figcaption>
@@ -124,7 +128,7 @@ function giveRandomCards($quantity){
     $statement = $GLOBALS['pdo']->prepare($sql);
     $result = $statement->execute();
     while($row = $statement->fetch()) {
-        displayCard($row['MasterShortName'], $row['CardMasterSubID']);
+        displayCard($row['MasterShortName'], $row['CardMasterSubID'], $row['CardID']);
         
         $sql = "INSERT INTO usersxcards (UserID, CardID, StorageID) "
             . "VALUES (".$GLOBALS['user']['id'].", ".$row['CardID'].", ".$GLOBALS['basestorage'].")";

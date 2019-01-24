@@ -35,7 +35,12 @@ if(isset($_GET["storage"])){
     $result = $statement->execute();
     while($row = $statement->fetch()) {
     ?>
-    <li class="nav-item <?php if($storageID == $row["StorageID"]){ echo "active"; }?>">
+    <li ondrop="drop(event, 
+                '<?php echo $row["StorageID"]; ?>', 
+                '<?php echo $storageID; ?>', 
+                '<?php echo $user['id']; ?>')" 
+                ondragover="allowDrop(event)"
+        class="nav-item <?php if($storageID == $row["StorageID"]){ echo "active"; }?>">
         <a class="nav-link" href="cards.php?storage=<?php echo $row["StorageID"]; ?>">
             <?php echo $row["StorageName"]; ?>
         </a>
@@ -48,7 +53,7 @@ if(isset($_GET["storage"])){
 
 <div class="row">
     <?php
-        $sql = "SELECT MasterShortName, CardMasterSubID "
+        $sql = "SELECT cards.CardID, MasterShortName, CardMasterSubID "
             . "FROM usersxcards "
             . "INNER JOIN storages ON usersxcards.StorageID = storages.StorageID "
             . "INNER JOIN cards ON usersxcards.CardID = cards.CardID "
@@ -58,7 +63,7 @@ if(isset($_GET["storage"])){
         $statement = $pdo->prepare($sql);
         $result = $statement->execute();
         while($row = $statement->fetch()) {
-            displayCard($row['MasterShortName'], $row['CardMasterSubID']); 
+            displayCard($row['MasterShortName'], $row['CardMasterSubID'], $row['CardID']); 
         }
     ?> 
     
@@ -68,3 +73,29 @@ if(isset($_GET["storage"])){
 <?php 
 include("templates/footer.inc.php")
 ?>
+
+<script>
+var dragcardid = ""; //Unique id of the card (z.B. 15)    
+var cardname = ""; //Unique name of the card (z.B. bsfood10)    
+    
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+
+function drag(ev, cid, cname) {
+  dragcardid = cid;
+  cardname = cname;
+}
+
+function drop(ev, idnew, idold, userid) {
+    ev.preventDefault(); //Prevents the browsers default drag/drop handling
+  
+    //Call moveCard, to move the card to a different storage
+    $.post("moveCard.php", {cardid: dragcardid, idold: idold, idnew: idnew, user: userid}, function(data, status) {
+        document.getElementById(cardname).remove(); //Remove the card from the ui
+    }).fail(function(err, status) {
+       <?php echo _("alert(\"There was a error while moving the card.\");"); ?>
+    });
+
+}
+</script>

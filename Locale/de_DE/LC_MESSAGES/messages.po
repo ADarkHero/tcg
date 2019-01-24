@@ -293,6 +293,9 @@ msgstr "Kartenkürzel"
 msgid "Card ID"
 msgstr "Kartennummer"
 
+msgid "alert(\"There was a error while moving the card.\");"
+msgstr "alert(\"Es gab einen Fehler beim Verschieben der Karte.\");"
+
 # ######################################
 # Sets
 # sets.php

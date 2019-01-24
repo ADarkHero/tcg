@@ -20,8 +20,8 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="<?php echo $base; ?>js/jquery-3.3.1.slim.min.js"></script>
-    <script src="<?php echo $base; ?>js/popper.min.js"></script>
-    <script src="<?php echo $base; ?>js/bootstrap.min.js"></script>
+    <script src="<?php echo $GLOBALS['basepath']; ?>js/jquery-3.3.1.min.js"></script>
+    <script src="<?php echo $GLOBALS['basepath']; ?>js/popper.min.js"></script>
+    <script src="<?php echo $GLOBALS['basepath']; ?>js/bootstrap.min.js"></script>
   </body>
 </html>
