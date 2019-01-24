@@ -89,8 +89,9 @@
         <div id="navbar" class="navbar-collapse collapse">
          <ul class="nav navbar-nav navbar-right">    
             <li><a href="index.php"><i class="glyphicon glyphicon-leaf logo"></i> <?php echo _("Home"); ?></a></li>
-            <li><a href="<?php echo $GLOBALS['basepath']; ?>cards.php"><?php echo _("Your cards"); ?></a></li> 
-            <li><a href="<?php echo $GLOBALS['basepath']; ?>sets.php"><?php echo _("Cardset"); ?></a></li>
+            <li><a href="<?php echo $GLOBALS['basepath']; ?>user.php"><?php echo getUsername($user["id"])."'s "._("profile"); ?></a></li> 
+            <li><a href="<?php echo $GLOBALS['basepath']; ?>members.php"><?php echo _("Memberlist"); ?></a></li> 
+            <li><a href="<?php echo $GLOBALS['basepath']; ?>sets.php"><?php echo _("Cardsets"); ?></a></li>
             <li><a href="<?php echo $GLOBALS['basepath']; ?>games.php"><?php echo _("Games"); ?></a></li>
             <li><a href="<?php echo $GLOBALS['basepath']; ?>settings.php"><?php echo _("Settings"); ?></a></li>
             <li><a href="<?php echo $GLOBALS['basepath']; ?>logout.php">Logout</a></li>

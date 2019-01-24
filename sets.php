@@ -12,7 +12,7 @@ include("templates/header.inc.php");
 
 <div class="container main-container">
 
-<h1><?php echo _("Cards"); ?></h1>
+<h1><?php echo _("Cardsets"); ?></h1>
 
 <div class="panel panel-default">
  
@@ -24,8 +24,6 @@ if(isset($_GET["category"])){
 }
 
 ?>
-    
-
 
 <ul class="nav nav-tabs">
 <?php

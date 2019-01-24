@@ -167,3 +167,74 @@ function giveRandomCards($quantity){
     <?php
         
 }
+
+/**
+* Gives the user random cards
+*/
+function generateStorages($uid){
+    $storageID = getStorageID();
+    
+    $sql = "SELECT * FROM storages";
+    $statement = $GLOBALS['pdo']->prepare($sql);
+    $result = $statement->execute();
+    while($row = $statement->fetch()) {
+    ?>
+    <li 
+        <?php 
+        //Only show drag/drop stuff, if you are on your own profile
+            if($uid === $GLOBALS["user"]["id"]){
+                echo 'ondrop="drop(event, ';
+                echo "'".$row["StorageID"]."', ";
+                echo "'".$storageID."', ";
+                echo "'".$GLOBALS['user']['id']."')\"";
+                echo ' ondragover="allowDrop(event)"';
+            }
+        ?>        
+        class="nav-item <?php if($storageID == $row["StorageID"]){ echo "active"; }?>">
+        <a class="nav-link" href="user.php?storage=<?php echo $row["StorageID"]; ?>&id=<?php echo $uid; ?>">
+            <?php echo $row["StorageName"]; ?>
+        </a>
+    </li>
+    <?php
+    }
+}
+
+/**
+* Returns the current storage id
+*/
+function getStorageID(){
+    $storageID = $GLOBALS['basestorage']; //ID of "New"
+    if(isset($_GET["storage"])){
+        $storageID = htmlspecialchars($_GET["storage"]);
+    }
+    
+    return $storageID;
+}
+
+/**
+* Returns the username from given userid
+*/
+function getUsername($id){
+    $sql = "SELECT username FROM users WHERE id = ".$id." LIMIT 1";
+    $statement = $GLOBALS['pdo']->prepare($sql);
+    $result = $statement->execute();
+    while($row = $statement->fetch()) {
+        return $row["username"];
+    } 
+    
+    return "";
+}
+
+
+/**
+* Lists all users
+*/
+function listAllUsers(){
+    $sql = "SELECT id, username FROM users";
+    $statement = $GLOBALS['pdo']->prepare($sql);
+    $result = $statement->execute();
+    while($row = $statement->fetch()) {
+        echo '<a href="user.php?id='.$row["id"].'">'.$row["username"].'</a>';
+        echo "<br>";
+    } 
+}

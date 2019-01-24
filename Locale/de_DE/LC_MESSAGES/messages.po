@@ -37,8 +37,17 @@ msgstr "Interner Bereich"
 msgid "Settings"
 msgstr "Einstellungen"
 
+msgid "Your profile"
+msgstr "Dein Profil"
+
 msgid "Your cards"
 msgstr "Deine Karten"
+
+msgid "Memberlist"
+msgstr "Mitgliederliste"
+
+msgid "Cardsets"
+msgstr "Kartensets"
 
 msgid "Games"
 msgstr "Spiele"
@@ -97,35 +106,26 @@ msgstr "Neues Passwort"
 # Index
 # index.php
 # ######################################
-msgid "Welcome to ADarkHeros version of the PHP-einfach loginscript."
-msgstr "Herzlich Willkommen zu ADarkHeros Version des PHP-einfach Loginscripts."
+msgid "Play minigames to get cards"
+msgstr "Spiele Minispiele um Karten zu erhalten"
 
-msgid "Register now"
-msgstr "Jetzt registrieren"
+msgid "Trade cards with other members"
+msgstr "Tausche Karten mit anderen Spielern"
 
-msgid "Registration & login"
-msgstr "Registrierung & Login"
+msgid "Collect card sets"
+msgstr "Sammle Kartensets"
 
-msgid "Internal area"
-msgstr "Interner Mitgliederbereich"
+msgid "News"
+msgstr "Neues"
 
-msgid "New password per mail"
-msgstr "Neues Zusenden eines Passworts"
-
-msgid "Easy understandable and expandable"
-msgstr "Programmcode leicht verständlich und erweiterbar"
-
-msgid "Responsive webdesign for pc, tablet and smartphone"
-msgstr "Responsive Webdesign, ideal für PC, Tablet und Smartphone"
-
-msgid "You can find a documentation and beginner tips on the php-einfac"
-msgstr "Auf der php-einfach-Seite erhaltet ihr eine umfangreiche Einführung i"
-
-msgid "You can find my GitHub <a href=\"https://github.com/ADarkHero/loginscript\" target=\"_blank\">here</a>."
-msgstr "Ihr findet mein GitHub <a href=\"https://github.com/ADarkHero/loginscript\" target=\"_blank\">hier</a>."
+msgid "You can find my GitHub <a href=\"https://github.com/ADarkHero/tcg\" target=\"_blank\">here</a>."
+msgstr "Ihr findet mein GitHub <a href=\"https://github.com/ADarkHero/tcg\" target=\"_blank\">hier</a>."
 
 msgid "Further information"
 msgstr "Weitere Informationen"
+
+msgid "We trade cards"
+msgstr "Wir tauschen Karten"
 
 # ######################################
 # Internal
@@ -151,8 +151,8 @@ msgstr "E-Mail oder Passwort war ungültig"
 msgid "Logout successfull."
 msgstr "Der Logout war erfolgreich."
 
-msgid "Back to login"
-msgstr "Zurück zum Login"
+msgid "Back to homepage"
+msgstr "Zurück zur Startseite"
 
 # ######################################
 # Register

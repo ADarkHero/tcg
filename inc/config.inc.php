@@ -15,4 +15,4 @@ $pdo = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_password);
 $GLOBALS['pdo'] = $pdo;
 
 
- $GLOBALS['basestorage'] = "6"; //What's the standard storage place?
+$GLOBALS['basestorage'] = "6"; //What's the standard storage place?
