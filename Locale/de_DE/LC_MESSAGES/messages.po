@@ -43,6 +43,9 @@ msgstr "Deine Karten"
 msgid "Games"
 msgstr "Spiele"
 
+msgid "Home"
+msgstr "Startseite"
+
 # ######################################
 # FOOTER
 # templates/footer.inc.php

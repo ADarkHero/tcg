@@ -2,6 +2,10 @@
 	margin-bottom: 0px;
 }
 
+.navbar-nav{
+    flex-direction: unset !important;
+}
+
 .navbar-inverse .navbar-brand {
 	font-size: 2em;
 	color: #fff;

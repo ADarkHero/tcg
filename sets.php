@@ -36,7 +36,7 @@ if(isset($_GET["category"])){
     while($row = $statement->fetch()) {
     ?>
     <li class="nav-item <?php if($categoryID == $row["CategoryID"]){ echo "active"; }?>">
-        <a class="nav-link" href="cards.php?category=<?php echo $row["CategoryID"]; ?>">
+        <a class="nav-link" href="sets.php?category=<?php echo $row["CategoryID"]; ?>">
             <?php echo $row["CategoryName"]; ?>
         </a>
     </li>
@@ -46,29 +46,16 @@ if(isset($_GET["category"])){
 ?>
 </ul>
 
-<div class="container">
-<div class="row">
+<div class="container-fluid mt-2">
     <?php
-        $sql = "SELECT MasterID, MasterShortName FROM masters";
+        $sql = "SELECT MasterID, MasterShortName FROM masters "
+                . "WHERE CategoryID = ".$categoryID;
         $statement = $pdo->prepare($sql);
         $result = $statement->execute();
         while($row = $statement->fetch()) {
-        ?>
-            <div class="col-xs-3 col-sm-2 col-lg-1">
-                <a href="#" target="_blank">
-                    <figure class="figure">
-                        <img width="100%" src="img/masters/<?php echo $row['MasterShortName']; ?>.jpg" 
-                             class="figure-img img-fluid rounded" 
-                             alt="<?php echo $row['MasterShortName'] ?>">
-                        <figcaption class="figure-caption"><?php echo $row['MasterShortName']; ?></figcaption>
-                    </figure>
-                </a>
-            </div>    
-        <?php
+            displayCardSet($row['MasterShortName'], $row['MasterID']);
         }
     ?> 
-    
-</div>
 </div>
 </div>
 </div>

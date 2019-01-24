@@ -51,7 +51,7 @@ if(isset($_GET["storage"])){
 ?>
 </ul>
 
-<div class="row">
+<div class="container-fluid mt-2">
     <?php
         $sql = "SELECT cards.CardID, MasterShortName, CardMasterSubID "
             . "FROM usersxcards "

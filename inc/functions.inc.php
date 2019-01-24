@@ -99,19 +99,38 @@ function error($error_msg) {
 function displayCard($shortname, $masterid, $id){
     $cardname = $shortname.$masterid;
     ?>
-    <div class="col-xs-3 col-sm-2 col-lg-1" id="<?php echo $cardname; ?>">
-        <a href="#" target="_blank">
-            <figure class="figure">
-                <img width="100%" draggable="true" 
-                     ondragstart="drag(event, 
-                     '<?php echo $id; ?>',
-                     '<?php echo $cardname; ?>')" 
-                     src="<?php echo $GLOBALS['basepath']; ?>img/cards/<?php echo $cardname; ?>.jpg" 
-                     class="figure-img img-fluid rounded" 
-                     alt="<?php echo $cardname; ?>">
-                <figcaption class="figure-caption"><?php echo $cardname; ?></figcaption>
-            </figure>
-        </a>
+    <div class="col-xs-3 col-md-2 col-xl-1" id="<?php echo $cardname; ?>">
+        <figure class="figure">
+            <img width="100%" draggable="true" 
+                 ondragstart="drag(event, 
+                 '<?php echo $id; ?>',
+                 '<?php echo $cardname; ?>')" 
+                 src="<?php echo $GLOBALS['basepath']; ?>img/cards/<?php echo $cardname; ?>.jpg" 
+                 class="figure-img img-fluid rounded" 
+                 alt="<?php echo $cardname; ?>">
+            <a href="#" target="_blank">
+                 <figcaption class="figure-caption"><?php echo $cardname; ?></figcaption>
+            </a>
+        </figure>
+    </div> 
+<?php
+}
+
+/**
+* Displays a cardset
+*/
+function displayCardSet($shortname, $masterid){
+    ?>
+    <div class="col-xs-3 col-md-2 col-xl-1" id="<?php echo $cardname; ?>">
+        <figure class="figure">
+            <img width="100%"  
+                 src="img/masters/<?php echo $shortname; ?>.jpg" 
+                 class="figure-img img-fluid rounded" 
+                 alt="<?php echo $cardname; ?>">
+            <a href="#" target="_blank">
+                 <figcaption class="figure-caption"><?php echo $shortname; ?></figcaption>
+            </a>
+        </figure>
     </div> 
 <?php
 }
@@ -127,6 +146,14 @@ function giveRandomCards($quantity){
             . "ORDER BY RAND() LIMIT ".$quantity;
     $statement = $GLOBALS['pdo']->prepare($sql);
     $result = $statement->execute();
+    ?>
+
+    <div class="alert alert-success" role="alert">
+        You got <?php echo $quantity; ?> new random cards!
+    </div>
+        
+    <div class="container">
+    <?php
     while($row = $statement->fetch()) {
         displayCard($row['MasterShortName'], $row['CardMasterSubID'], $row['CardID']);
         
@@ -135,6 +162,8 @@ function giveRandomCards($quantity){
         $statement = $GLOBALS['pdo']->prepare($sql);
         $result = $statement->execute();
     }
-    
-    
+    ?>
+    </div>    
+    <?php
+        
 }
