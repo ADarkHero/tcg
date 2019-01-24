@@ -46,10 +46,16 @@ $cscript = basename($_SERVER["SCRIPT_FILENAME"]);
             </button>
 
             <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-                <?php if (is_checked_in()) { ?>
+                <?php if (is_checked_in()) { $user = check_user();?>
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item <?php if($cscript == "user.php"){ echo "active"; } ?>">
-                            <a class="nav-link" href="<?php echo $GLOBALS['basepath']; ?>user.php"><?php echo getUsername($GLOBALS["user"]["id"]) . "'s " . _("profile"); ?></a>
+                            <a class="nav-link" href="<?php echo $GLOBALS['basepath']; ?>user.php"><?php echo getUsername($user["id"]) . "'s " . _("profile"); ?></a>
+                        </li>
+                        <li class="nav-item <?php if($cscript == "trades.php"){ echo "active"; } ?>">
+                            <a class="nav-link" href="<?php echo $GLOBALS['basepath']; ?>trades.php"><?php echo _("Your trades"); ?></a>
+                        </li>
+                        <li class="nav-item <?php if($cscript == "games.php"){ echo "active"; } ?>">
+                            <a class="nav-link" href="<?php echo $GLOBALS['basepath']; ?>games.php"><?php echo _("Games"); ?></a>
                         </li>
                         <li class="nav-item <?php if($cscript == "members.php"){ echo "active"; } ?>">
                             <a class="nav-link" href="<?php echo $GLOBALS['basepath']; ?>members.php"><?php echo _("Memberlist"); ?></a>
@@ -57,9 +63,7 @@ $cscript = basename($_SERVER["SCRIPT_FILENAME"]);
                         <li class="nav-item <?php if($cscript == "sets.php"){ echo "active"; } ?>">
                             <a class="nav-link" href="<?php echo $GLOBALS['basepath']; ?>sets.php"><?php echo _("Cardsets"); ?></a>
                         </li>
-                        <li class="nav-item <?php if($cscript == "games.php"){ echo "active"; } ?>">
-                            <a class="nav-link" href="<?php echo $GLOBALS['basepath']; ?>games.php"><?php echo _("Games"); ?></a>
-                        </li>
+                        
                         <li class="nav-item <?php if($cscript == "settings.php"){ echo "active"; } ?>">
                             <a class="nav-link" href="<?php echo $GLOBALS['basepath']; ?>settings.php"><?php echo _("Settings"); ?></a>
                         </li>

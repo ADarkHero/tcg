@@ -11,7 +11,5 @@ $sql = "UPDATE usersxcards SET UserID = ".htmlspecialchars($_POST["user"]).", "
         . "AND StorageID = ".htmlspecialchars($_POST["idold"])." "
         . "LIMIT 1";
 
-echo $sql;
-
 $statement = $GLOBALS['pdo']->prepare($sql);
 $result = $statement->execute();

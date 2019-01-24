@@ -31,19 +31,7 @@ include("templates/header.inc.php");
 
     <div class="row">
         <?php
-        $sql = "SELECT cards.CardID, MasterShortName, CardMasterSubID "
-                . "FROM usersxcards "
-                . "INNER JOIN storages ON usersxcards.StorageID = storages.StorageID "
-                . "INNER JOIN cards ON usersxcards.CardID = cards.CardID "
-                . "INNER JOIN masters ON cards.MasterID = masters.MasterID "
-                . "WHERE UserID = " . $userNumber . " "
-                . "AND usersxcards.StorageID = " . $storageID . " "
-                . "ORDER BY MasterShortName, cards.CardID";
-        $statement = $pdo->prepare($sql);
-        $result = $statement->execute();
-        while ($row = $statement->fetch()) {
-            displayCard($row['MasterShortName'], $row['CardMasterSubID'], $row['CardID']);
-        }
+            displayStorageCards($userNumber, $storageID);
         ?> 
     </div>   
 </div>
@@ -60,7 +48,9 @@ include("templates/header.inc.php");
       </div>
       <div class="modal-body">
           <div class="col"><?php echo _("What do you want to give for ") ?><b id="tradeFor"></b>?</div>
-          <div class="col">TODO: Kartenliste einfügen unso.</div>
+          <div class="col">
+              <?php listAllCards(); ?>
+          </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -100,8 +90,10 @@ include("templates/footer.inc.php")
     
     //TODO: read selfcardid
     function tradeCard(){
-        $.post("tradeCard.php", {selfcardid: 1, othercardid: cardid, selfuser: <?php echo $user["id"]; ?>, otheruser: <?php echo $userNumber; ?>}, function (data, status) {
-            alert(data);
+        var selfcard = $( "#cardList option:selected" ).val();
+    
+        $.post("tradeCard.php", {selfcardid: selfcard, othercardid: cardid, selfuser: <?php echo $user["id"]; ?>, otheruser: <?php echo $userNumber; ?>}, function (data, status) {
+            $('#tradeModal').modal('hide');
         }).fail(function (err, status) {
             <?php echo _("alert(\"There was a error while moving the card.\");"); ?>
         })

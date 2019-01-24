@@ -55,6 +55,9 @@ msgstr "Spiele"
 msgid "Home"
 msgstr "Startseite"
 
+msgid "Your Trades"
+msgstr "Tauschanfragen"
+
 # ######################################
 # FOOTER
 # templates/footer.inc.php

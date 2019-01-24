@@ -97,10 +97,16 @@ function error($error_msg) {
 function displayCard($shortname, $masterid, $id) {
     $cardname = $shortname . $masterid;
     ?>
-        <div class="col-xs-3 col-md-2 col-xl-1" id="<?php echo $cardname; ?>">
-            <a <?php if($GLOBALS["user"]["id"] !== $_GET["id"]){ echo 'href="#myModal" data-toggle="modal"'; }?>  data-target="#tradeModal" 
-               data-card-id="<?php echo $id; ?>"
-               data-card-name="<?php echo $cardname; ?>">
+    <div class="col-xs-3 col-md-2 col-xl-1" id="<?php echo $cardname; ?>">
+        <a <?php
+        if(isset($_GET["id"])){
+            if ($GLOBALS["user"]["id"] !== $_GET["id"]) {
+                echo 'href="#myModal" data-toggle="modal"';
+            }
+        }
+        ?>  data-target="#tradeModal" 
+            data-card-id="<?php echo $id; ?>"
+            data-card-name="<?php echo $cardname; ?>">
             <figure class="figure">
                 <img width="100%" draggable="true" 
                      ondragstart="drag(event, 
@@ -109,12 +115,12 @@ function displayCard($shortname, $masterid, $id) {
                      src="<?php echo $GLOBALS['basepath']; ?>img/cards/<?php echo $cardname; ?>.jpg" 
                      class="figure-img img-fluid rounded" 
                      alt="<?php echo $cardname; ?>">
-                
-                    <figcaption class="figure-caption"><?php echo $cardname; ?></figcaption>
-                
+
+                <figcaption class="figure-caption"><?php echo $cardname; ?></figcaption>
+
             </figure>
-                </a>
-        </div> 
+        </a>
+    </div> 
     <?php
 }
 
@@ -184,11 +190,11 @@ function generateStorages($uid) {
         while ($row = $statement->fetch()) {
             ?>
             <a class="nav-link 
-               <?php
-               if ($storageID == $row["StorageID"]) {
-                   echo "active";
-               }
-               ?>
+            <?php
+            if ($storageID == $row["StorageID"]) {
+                echo "active";
+            }
+            ?>
                "  role="tab" aria-controls="v-pills-home" aria-selected="true"
                <?php
                //Only show drag/drop stuff, if you are on your own profile
@@ -207,6 +213,50 @@ function generateStorages($uid) {
         }
         ?>
     </div>
+    <?php
+}
+
+/**
+ * Displays all card from a user, that are in a specific storage
+ */
+function displayStorageCards($userNumber, $storageID) {
+    $sql = "SELECT cards.CardID, MasterShortName, CardMasterSubID "
+            . "FROM usersxcards "
+            . "INNER JOIN storages ON usersxcards.StorageID = storages.StorageID "
+            . "INNER JOIN cards ON usersxcards.CardID = cards.CardID "
+            . "INNER JOIN masters ON cards.MasterID = masters.MasterID "
+            . "WHERE UserID = " . $userNumber . " "
+            . "AND usersxcards.StorageID = " . $storageID . " "
+            . "ORDER BY MasterShortName, cards.CardID";
+    $statement = $GLOBALS['pdo']->prepare($sql);
+    $result = $statement->execute();
+    while ($row = $statement->fetch()) {
+        displayCard($row['MasterShortName'], $row['CardMasterSubID'], $row['CardID']);
+    }
+}
+
+function listAllCards() {
+    ?>
+    <form id="cardList">
+        <div class="form-group">
+            <select class="form-control" id="exampleFormControlSelect1">
+                <?php
+                $sql = "SELECT cards.CardID, MasterShortName, CardMasterSubID "
+                        . "FROM usersxcards "
+                        . "INNER JOIN storages ON usersxcards.StorageID = storages.StorageID "
+                        . "INNER JOIN cards ON usersxcards.CardID = cards.CardID "
+                        . "INNER JOIN masters ON cards.MasterID = masters.MasterID "
+                        . "WHERE UserID = " . $GLOBALS["user"]["id"] . " "
+                        . "ORDER BY MasterShortName, cards.CardID";
+                $statement = $GLOBALS['pdo']->prepare($sql);
+                $result = $statement->execute();
+                while ($row = $statement->fetch()) {
+                    echo '<option value="'.$row['CardID'].'">'.$row['MasterShortName'].$row['CardMasterSubID']."</option>";
+                }
+                ?>
+            </select>
+        </div>
+    </form>
     <?php
 }
 
