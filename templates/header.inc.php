@@ -20,6 +20,7 @@ bindtextdomain($domain, "Locale");
 textdomain($domain);
 
 $GLOBALS['basepath'] = "/tcg/";
+$cscript = basename($_SERVER["SCRIPT_FILENAME"]);
 ?>
 
 <!DOCTYPE html>
@@ -47,22 +48,22 @@ $GLOBALS['basepath'] = "/tcg/";
             <div class="collapse navbar-collapse" id="navbarsExampleDefault">
                 <?php if (is_checked_in()) { ?>
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
+                        <li class="nav-item <?php if($cscript == "user.php"){ echo "active"; } ?>">
                             <a class="nav-link" href="<?php echo $GLOBALS['basepath']; ?>user.php"><?php echo getUsername($GLOBALS["user"]["id"]) . "'s " . _("profile"); ?></a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item <?php if($cscript == "members.php"){ echo "active"; } ?>">
                             <a class="nav-link" href="<?php echo $GLOBALS['basepath']; ?>members.php"><?php echo _("Memberlist"); ?></a>
                         </li>
-                        <li>
+                        <li class="nav-item <?php if($cscript == "sets.php"){ echo "active"; } ?>">
                             <a class="nav-link" href="<?php echo $GLOBALS['basepath']; ?>sets.php"><?php echo _("Cardsets"); ?></a>
                         </li>
-                        <li>
+                        <li class="nav-item <?php if($cscript == "games.php"){ echo "active"; } ?>">
                             <a class="nav-link" href="<?php echo $GLOBALS['basepath']; ?>games.php"><?php echo _("Games"); ?></a>
                         </li>
-                        <li>
+                        <li class="nav-item <?php if($cscript == "settings.php"){ echo "active"; } ?>">
                             <a class="nav-link" href="<?php echo $GLOBALS['basepath']; ?>settings.php"><?php echo _("Settings"); ?></a>
                         </li>
-                        <li>
+                        <li class="nav-item <?php if($cscript == "logout.php"){ echo "active"; } ?>">
                             <a class="nav-link" href="<?php echo $GLOBALS['basepath']; ?>logout.php">Logout</a>
                         </li>
                     </ul>
@@ -73,7 +74,7 @@ $GLOBALS['basepath'] = "/tcg/";
                             <div class="col" action="login.php" method="post">
                                 <input type="text" class="form-control" id="emailusername" placeholder="E-Mail/Username" name="emailusername">
                                 <input type="checkbox" id="angemeldet_bleiben" name="angemeldet_bleiben" value="remember-me" title="Angemeldet bleiben"  checked="checked">
-                                <label class="form-check-label" for="angemeldet_bleiben"><?php echo _("Remember me?"); ?></label>
+                                <label class="form-check-label text-white" for="angemeldet_bleiben"><?php echo _("Remember me?"); ?></label>
                             </div>
                             <div class="col">
                                 <input type="password" class="form-control" placeholder="<?php echo _("Password"); ?>" name="passwort">

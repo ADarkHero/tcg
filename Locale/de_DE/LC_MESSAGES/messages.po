@@ -302,6 +302,13 @@ msgstr "alert(\"Es gab einen Fehler beim Verschieben der Karte.\");"
 msgid "Trade"
 msgstr "Tauschen"
 
+msgid "Trade card?"
+msgstr "Karte tauschen?"
+
+msgid "Ask for trade"
+msgstr "Tausch anfragen"
+
+
 # ######################################
 # Sets
 # sets.php

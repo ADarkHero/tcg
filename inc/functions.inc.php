@@ -97,29 +97,33 @@ function error($error_msg) {
 function displayCard($shortname, $masterid, $id) {
     $cardname = $shortname . $masterid;
     ?>
-    <div class="col-xs-3 col-md-2 col-xl-1" id="<?php echo $cardname; ?>">
-        <figure class="figure">
-            <img width="100%" draggable="true" 
-                 ondragstart="drag(event, 
-                 '<?php echo $id; ?>',
-                 '<?php echo $cardname; ?>')" 
-                 src="<?php echo $GLOBALS['basepath']; ?>img/cards/<?php echo $cardname; ?>.jpg" 
-                 class="figure-img img-fluid rounded" 
-                 alt="<?php echo $cardname; ?>">
-            <a href="#myModal" data-toggle="modal" data-target="#myModal">
-                <figcaption class="figure-caption"><?php echo $cardname; ?></figcaption>
-            </a>
-        </figure>
-    </div> 
+        <div class="col-xs-3 col-md-2 col-xl-1" id="<?php echo $cardname; ?>">
+            <a <?php if($GLOBALS["user"]["id"] !== $_GET["id"]){ echo 'href="#myModal" data-toggle="modal"'; }?>  data-target="#tradeModal" 
+               data-card-id="<?php echo $id; ?>"
+               data-card-name="<?php echo $cardname; ?>">
+            <figure class="figure">
+                <img width="100%" draggable="true" 
+                     ondragstart="drag(event, 
+                     '<?php echo $id; ?>',
+                     '<?php echo $cardname; ?>')" 
+                     src="<?php echo $GLOBALS['basepath']; ?>img/cards/<?php echo $cardname; ?>.jpg" 
+                     class="figure-img img-fluid rounded" 
+                     alt="<?php echo $cardname; ?>">
+                
+                    <figcaption class="figure-caption"><?php echo $cardname; ?></figcaption>
+                
+            </figure>
+                </a>
+        </div> 
     <?php
 }
 
 /**
  * Displays a cardset
  */
-function displayCardSet($shortname, $masterid) {
+function displayCardSet($shortname) {
     ?>
-    <div class="col-xs-3 col-md-2 col-xl-1" id="<?php echo $cardname; ?>">
+    <div class="col-xs-3 col-md-2 col-xl-1" id="<?php echo $shortname; ?>">
         <figure class="figure">
             <img width="100%"  
                  src="img/masters/<?php echo $shortname; ?>.jpg" 
@@ -151,51 +155,53 @@ function giveRandomCards($quantity) {
     </div>
 
     <div class="row">
-    <?php
-    while ($row = $statement->fetch()) {
-        displayCard($row['MasterShortName'], $row['CardMasterSubID'], $row['CardID']);
-
-        $sql = "INSERT INTO usersxcards (UserID, CardID, StorageID) "
-                . "VALUES (" . $GLOBALS['user']['id'] . ", " . $row['CardID'] . ", " . $GLOBALS['basestorage'] . ")";
-        $state = $GLOBALS['pdo']->prepare($sql);
-        $result = $state->execute();
-    }
-    ?>
-    </div>    
         <?php
-    }
+        while ($row = $statement->fetch()) {
+            displayCard($row['MasterShortName'], $row['CardMasterSubID'], $row['CardID']);
 
-    /**
-     * Gives the user random cards
-     */
-    function generateStorages($uid) {
-        $storageID = getStorageID();
-
-        $sql = "SELECT * FROM storages";
-        $statement = $GLOBALS['pdo']->prepare($sql);
-        $result = $statement->execute();
+            $sql = "INSERT INTO usersxcards (UserID, CardID, StorageID) "
+                    . "VALUES (" . $GLOBALS['user']['id'] . ", " . $row['CardID'] . ", " . $GLOBALS['basestorage'] . ")";
+            $state = $GLOBALS['pdo']->prepare($sql);
+            $result = $state->execute();
+        }
         ?>
-    <div class="nav flex-column nav-pills fixed-left gray-pill" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+    </div>    
     <?php
-    while ($row = $statement->fetch()) {
-        ?>
+}
+
+/**
+ * Gives the user random cards
+ */
+function generateStorages($uid) {
+    $storageID = getStorageID();
+
+    $sql = "SELECT * FROM storages";
+    $statement = $GLOBALS['pdo']->prepare($sql);
+    $result = $statement->execute();
+    ?>
+    <div class="nav flex-column nav-pills fixed-left gray-pill" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+        <?php
+        while ($row = $statement->fetch()) {
+            ?>
             <a class="nav-link 
-               <?php if ($storageID == $row["StorageID"]) {
-                    echo "active";
-                } ?>
+               <?php
+               if ($storageID == $row["StorageID"]) {
+                   echo "active";
+               }
+               ?>
                "  role="tab" aria-controls="v-pills-home" aria-selected="true"
-            <?php
-            //Only show drag/drop stuff, if you are on your own profile
-            if ($uid === $GLOBALS["user"]["id"]) {
-                echo 'ondrop="drop(event, ';
-                echo "'" . $row["StorageID"] . "', ";
-                echo "'" . $storageID . "', ";
-                echo "'" . $GLOBALS['user']['id'] . "')\"";
-                echo ' ondragover="allowDrop(event)"';
-            }
-            ?>        
-                href="user.php?storage=<?php echo $row["StorageID"]; ?>&id=<?php echo $uid; ?>">
-                    <?php echo $row["StorageName"]; ?>
+               <?php
+               //Only show drag/drop stuff, if you are on your own profile
+               if ($uid === $GLOBALS["user"]["id"]) {
+                   echo 'ondrop="drop(event, ';
+                   echo "'" . $row["StorageID"] . "', ";
+                   echo "'" . $storageID . "', ";
+                   echo "'" . $GLOBALS['user']['id'] . "')\"";
+                   echo ' ondragover="allowDrop(event)"';
+               }
+               ?>        
+               href="user.php?storage=<?php echo $row["StorageID"]; ?>&id=<?php echo $uid; ?>">
+            <?php echo $row["StorageName"]; ?>
             </a>
             <?php
         }
