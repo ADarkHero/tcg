@@ -316,11 +316,71 @@ function listYourTrades($who) {
                 echo '<div class="col"><a href="trades.php?trade=' . $row["TradeID"] . '&msg=cancel">' . _("Cancel Trade") . "</a></div>";
             } else {
                 echo '<div class="col">' . $row["username"] . "</div>";
-                echo '<div class="col">' . $row["MyMaster"] . $row["MyCard"] . "</div>";
                 echo '<div class="col">' . $row["YourMaster"] . $row["YourCard"] . "</div>";
+                echo '<div class="col">' . $row["MyMaster"] . $row["MyCard"] . "</div>";  
                 echo '<div class="col"><a href="trades.php?trade=' . $row["TradeID"] . '&msg=accept">' . _("Accept Trade") . "</a></div>";
             }
             echo "</div>";
+        }
+    }
+    
+    /**
+     * Make a trade
+     * STEPS:
+     * * Read trade information from database
+     * * Move the card from the trade-requester to the trade-receivers card pool
+     * * Move the card from the trade-receiver to the trade-requesters card pool
+     * * Close the trade
+     */
+    function makeTrade($tradeID){
+        $sql = "SELECT * FROM trades WHERE TradeID = ".$tradeID." LIMIT 1";
+        $statement = $GLOBALS['pdo']->prepare($sql);
+        $result = $statement->execute();
+        while ($row = $statement->fetch()) {
+            $sql = "UPDATE usersxcards "
+                    . "SET UserID = ".$row["TradeUserOther"].", "
+                    . "StorageID = ".$GLOBALS['basestorage']." "
+                    . "WHERE CardID = ".$row["TradeCardSelf"]." "
+                    . "AND UserID = ".$row["TradeUserSelf"]." "
+                    . "LIMIT 1";
+            $sta = $GLOBALS['pdo']->prepare($sql);
+            $result = $sta->execute();
+            
+            $sql = "UPDATE usersxcards "
+                    . "SET UserID = ".$row["TradeUserSelf"].", "
+                    . "StorageID = ".$GLOBALS['basestorage']." "
+                    . "WHERE CardID = ".$row["TradeCardOther"]." "
+                    . "AND UserID = ".$row["TradeUserOther"]." "
+                    . "LIMIT 1";
+            $stat = $GLOBALS['pdo']->prepare($sql);
+            $result = $stat->execute();
+            
+            cancelTrade($tradeID);
+        }
+    }
+    
+    /**
+     * Canceles a trade
+     */
+    function cancelTrade($tradeID){
+        $sql = "UPDATE trades "
+                    . "SET TradeOpen = 0 "
+                    . "WHERE TradeID = ".$tradeID." "
+                    . "LIMIT 1";
+            $statment = $GLOBALS['pdo']->prepare($sql);
+            $result = $statment->execute();
+    }
+    
+    /**
+     * Lists all users
+     */
+    function listAllUsers() {
+        $sql = "SELECT id, username FROM users";
+        $statement = $GLOBALS['pdo']->prepare($sql);
+        $result = $statement->execute();
+        while ($row = $statement->fetch()) {
+            echo '<a href="user.php?id=' . $row["id"] . '">' . $row["username"] . '</a>';
+            echo "<br>";
         }
     }
 
@@ -350,17 +410,6 @@ function listYourTrades($who) {
         return "";
     }
 
-    /**
-     * Lists all users
-     */
-    function listAllUsers() {
-        $sql = "SELECT id, username FROM users";
-        $statement = $GLOBALS['pdo']->prepare($sql);
-        $result = $statement->execute();
-        while ($row = $statement->fetch()) {
-            echo '<a href="user.php?id=' . $row["id"] . '">' . $row["username"] . '</a>';
-            echo "<br>";
-        }
-    }
+    
     ?>
 

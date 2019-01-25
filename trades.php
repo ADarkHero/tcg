@@ -16,6 +16,16 @@ include("templates/header.inc.php");
     <h1><?php echo _("Your trades"); ?></h1>
 
     <?php
+    if(isset($_GET["trade"]) && isset($_GET["msg"])){
+        $tradeID = htmlspecialchars($_GET["trade"]);
+        $tradeMSG = htmlspecialchars($_GET["msg"]);
+        if($tradeMSG == "accept"){
+            makeTrade($tradeID);
+        }
+        else if($tradeMSG == "cancel"){
+            cancelTrade($tradeID);
+        }
+    }
     if (isset($_GET["msg"])) {
         ?>
             <?php 
