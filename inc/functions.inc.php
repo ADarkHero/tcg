@@ -157,7 +157,7 @@ function giveRandomCards($quantity) {
     ?>
 
     <div class="alert alert-success" role="alert">
-        You got <?php echo $quantity; ?> new random cards!
+        <?php echo _("You got ").$quantity.(" new random cards!"); ?>
     </div>
 
     <div class="row">
@@ -295,8 +295,7 @@ function listYourTrades($who) {
                 . "INNER JOIN cards ON trades.TradeCardOther = cards.CardID "
                 . "INNER JOIN masters ON masters.MasterID = cards.MasterID "
                 . "INNER JOIN("
-                . "SELECT TradeID, TradeUserOther, TradeUserSelf, TradeCardOther, TradeCardSelf, users.username, "
-                . "masters.MasterShortName, cards.CardMasterSubID "
+                . "SELECT TradeID, users.username, masters.MasterShortName, cards.CardMasterSubID "
                 . "FROM trades "
                 . "INNER JOIN users ON trades." . $srrev . " = users.id "
                 . "INNER JOIN cards ON trades.TradeCardSelf = cards.CardID "
@@ -314,12 +313,12 @@ function listYourTrades($who) {
                 echo '<div class="col">' . $row["username"] . "</div>";
                 echo '<div class="col">' . $row["MyMaster"] . $row["MyCard"] . "</div>";
                 echo '<div class="col">' . $row["YourMaster"] . $row["YourCard"] . "</div>";
-                echo '<div class="col"><a href="trades.php?trade=' . $row["TradeID"] . '">' . _("Cancel Trade") . "</a></div>";
+                echo '<div class="col"><a href="trades.php?trade=' . $row["TradeID"] . '&msg=cancel">' . _("Cancel Trade") . "</a></div>";
             } else {
                 echo '<div class="col">' . $row["username"] . "</div>";
                 echo '<div class="col">' . $row["MyMaster"] . $row["MyCard"] . "</div>";
                 echo '<div class="col">' . $row["YourMaster"] . $row["YourCard"] . "</div>";
-                echo '<div class="col"><a href="trades.php?trade=' . $row["TradeID"] . '">' . _("Accept Trade") . "</a></div>";
+                echo '<div class="col"><a href="trades.php?trade=' . $row["TradeID"] . '&msg=accept">' . _("Accept Trade") . "</a></div>";
             }
             echo "</div>";
         }

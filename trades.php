@@ -16,10 +16,20 @@ include("templates/header.inc.php");
     <h1><?php echo _("Your trades"); ?></h1>
 
     <?php
-    if (isset($_GET["trade"])) {
+    if (isset($_GET["msg"])) {
         ?>
-        <div class="alert alert-success" role="alert">
-            <?php echo _("Trade successful!"); ?>
+            <?php 
+                $msg = htmlspecialchars($_GET["msg"]);
+                if($msg == "accept"){
+                    echo '<div class="alert alert-success" role="alert">';
+                    echo _("Trade successful!"); 
+                }
+                else if($msg == "cancel"){
+                    echo '<div class="alert alert-warning" role="alert">';
+                    echo _("Trade cancelled!"); 
+                }
+                
+            ?>
         </div>
         <?php
     }

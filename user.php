@@ -22,6 +22,9 @@ include("templates/header.inc.php");
 
     <h1><?php echo getUsername($userNumber) . "'s " . _("profile"); ?></h1>
 
+    <div class="alert alert-success" id="tradeMessage" style="display: none" role="alert">
+        You shouldn't see this.
+    </div>
 
     <?php
     generateStorages($userNumber);
@@ -53,7 +56,7 @@ include("templates/header.inc.php");
           </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal"><?php echo _("Cancel"); ?></button>
         <button type="button" class="btn btn-primary" onclick="tradeCard()"><?php echo _("Ask for trade"); ?></button>
       </div>
     </div>
@@ -88,12 +91,16 @@ include("templates/footer.inc.php")
         });
     }
     
-    //TODO: read selfcardid
+    //Trade a card
     function tradeCard(){
         var selfcard = $( "#cardList option:selected" ).val();
+        var selfcardname = $( "#cardList option:selected" ).text();
     
         $.post("tradeCard.php", {selfcardid: selfcard, othercardid: cardid, selfuser: <?php echo $user["id"]; ?>, otheruser: <?php echo $userNumber; ?>}, function (data, status) {
             $('#tradeModal').modal('hide');
+            $('#tradeMessage').css("display", "flex")
+            document.getElementById("tradeMessage").innerHTML = 
+                    <?php echo _(" \"You requested ").getUsername($userNumber)._(" to trade their \"+cardname+\" for your \"+selfcardname+\"!\";"); ?>
         }).fail(function (err, status) {
             <?php echo _("alert(\"There was a error while moving the card.\");"); ?>
         })

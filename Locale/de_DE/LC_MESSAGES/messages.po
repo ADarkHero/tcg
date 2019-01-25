@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2019-01-23 09:23+0100\n"
-"PO-Revision-Date: 2019-01-24 16:54+0100\n"
+"PO-Revision-Date: 2019-01-25 10:03+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -311,6 +311,15 @@ msgstr "Karte tauschen?"
 msgid "Ask for trade"
 msgstr "Tausch anfragen"
 
+msgid "profile"
+msgstr "Profil"
+
+msgid "Cancel"
+msgstr "Abbrechen"
+
+msgid "What do you want to give for "
+msgstr "Welche Karte möchtest du hierfür anbieten: "
+
 # ######################################
 # Trades
 # trades.php
@@ -328,7 +337,7 @@ msgid "Cancel trade"
 msgstr "Tauschanfrage ablehnen"
 
 msgid "Trade successful!"
-msgstr "Tausch erfolgreich"
+msgstr "Tausch erfolgreich!"
 
 msgid "Trade with"
 msgstr "Tausch mit"
@@ -339,6 +348,14 @@ msgstr "Deine Karte"
 msgid "Their card"
 msgstr "Deren Karte"
 
+msgid "Trade cancelled"
+msgstr "Tausch abgebrochen"
+
+msgid " \"You requested "
+msgstr " \"Du hast "
+
+msgid " to trade their \"+cardname+\" for your \"+selfcardname+\"!\";"
+msgstr " deine \"+cardname+\" für deren \"+selfcardname+\" angeboten!\";"
 
 # ######################################
 # Games
@@ -346,3 +363,13 @@ msgstr "Deren Karte"
 # ######################################
 msgid "Give 7 random cards"
 msgstr "Erhalte 7 zufällige Karten"
+
+# ######################################
+# Functions
+# functions.inc.php
+# ######################################
+msgid "You got "
+msgstr "Du erhältst "
+
+msgid " new random cards!"
+msgstr " neue Karten!"
