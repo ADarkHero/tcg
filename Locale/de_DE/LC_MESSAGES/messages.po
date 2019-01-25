@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2019-01-23 09:23+0100\n"
-"PO-Revision-Date: 2019-01-24 10:06+0100\n"
+"PO-Revision-Date: 2019-01-24 16:54+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -311,17 +311,34 @@ msgstr "Karte tauschen?"
 msgid "Ask for trade"
 msgstr "Tausch anfragen"
 
-
 # ######################################
 # Trades
 # trades.php
 # ######################################
-
 msgid "Received trades"
 msgstr "Erhaltene Tauschanfragen"
 
 msgid "Sent trades"
 msgstr "Gesendete Tauschanfragen"
+
+msgid "Accept trade"
+msgstr "Tauschanfrage akzeptieren"
+
+msgid "Cancel trade"
+msgstr "Tauschanfrage ablehnen"
+
+msgid "Trade successful!"
+msgstr "Tausch erfolgreich"
+
+msgid "Trade with"
+msgstr "Tausch mit"
+
+msgid "Your card"
+msgstr "Deine Karte"
+
+msgid "Their card"
+msgstr "Deren Karte"
+
 
 # ######################################
 # Games

@@ -13,21 +13,31 @@ include("templates/header.inc.php");
 
 <div class="container main-container">
 
-<h1><?php echo _("Your trades"); ?></h1>
+    <h1><?php echo _("Your trades"); ?></h1>
 
-<div class="panel panel-default">
-<div class="container-fluid mt-2">
-    <h2><?php echo _("Received trades"); ?></h2>
     <?php
-        listYourTrades(false);   
+    if (isset($_GET["trade"])) {
+        ?>
+        <div class="alert alert-success" role="alert">
+            <?php echo _("Trade successful!"); ?>
+        </div>
+        <?php
+    }
     ?>
-    <h2><?php echo _("Sent trades"); ?></h2>
-    <?php
-        listYourTrades(true);
-    ?>
+
+    <div class="panel panel-default">
+        <div class="container-fluid mt-2">
+            <h2><?php echo _("Received trades"); ?></h2>
+            <?php
+            listYourTrades(false);
+            ?>
+            <h2><?php echo _("Sent trades"); ?></h2>
+            <?php
+            listYourTrades(true);
+            ?>
+        </div>
+    </div>
 </div>
-</div>
-</div>
-<?php 
+<?php
 include("templates/footer.inc.php")
 ?>

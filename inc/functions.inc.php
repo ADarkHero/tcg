@@ -99,7 +99,7 @@ function displayCard($shortname, $masterid, $id) {
     ?>
     <div class="col-xs-3 col-md-2 col-xl-1" id="<?php echo $cardname; ?>">
         <a <?php
-        if(isset($_GET["id"])){
+        if (isset($_GET["id"])) {
             if ($GLOBALS["user"]["id"] !== $_GET["id"]) {
                 echo 'href="#myModal" data-toggle="modal"';
             }
@@ -207,7 +207,7 @@ function generateStorages($uid) {
                }
                ?>        
                href="user.php?storage=<?php echo $row["StorageID"]; ?>&id=<?php echo $uid; ?>">
-            <?php echo $row["StorageName"]; ?>
+                   <?php echo $row["StorageName"]; ?>
             </a>
             <?php
         }
@@ -251,7 +251,7 @@ function listAllCards() {
                 $statement = $GLOBALS['pdo']->prepare($sql);
                 $result = $statement->execute();
                 while ($row = $statement->fetch()) {
-                    echo '<option value="'.$row['CardID'].'">'.$row['MasterShortName'].$row['CardMasterSubID']."</option>";
+                    echo '<option value="' . $row['CardID'] . '">' . $row['MasterShortName'] . $row['CardMasterSubID'] . "</option>";
                 }
                 ?>
             </select>
@@ -264,66 +264,104 @@ function listAllCards() {
  * Displays all your trades
  * @param boolean $who true: Trade sent | false: Trade received
  */
-function listYourTrades($who){
+function listYourTrades($who) {
     $uid = $GLOBALS["user"]["id"];
-    
-    $sr = "TradeUserSelf";
-    if(!$who){
-       $sr = "TradeUserOther"; 
-    }
-    
-    $sql = "SELECT * FROM trades "
-            . "WHERE ".$sr." = ".$uid." "
-            . "AND TradeOpen = 1";
-    $statement = $GLOBALS['pdo']->prepare($sql);
-    $result = $statement->execute();
-    while ($row = $statement->fetch()) {
-        echo "TradeUserSelf: ".$row["TradeUserSelf"]." ";
-        echo "TradeUserOther: ".$row["TradeUserOther"]." ";
-        echo "TradeCardSelf: ".$row["TradeCardSelf"]." ";
-        echo "TradeCardOther: ".$row["TradeCardOther"]." ";
-        echo $sr;
-        echo "<br>";
-    }
-}
 
-/**
- * Returns the current storage id
- */
-function getStorageID() {
-    $storageID = $GLOBALS['basestorage']; //ID of "New"
-    if (isset($_GET["storage"])) {
-        $storageID = htmlspecialchars($_GET["storage"]);
+    $sr = "TradeUserSelf"; //You
+    $srrev = "TradeUserOther"; //Them
+    if (!$who) {
+        $sr = "TradeUserOther";
+        $srrev = "TradeUserSelf";
     }
 
-    return $storageID;
-}
+    //Generate Headline
+    ?>
+    <div class="row">
+        <div class="col"><h5>Trade with</h5></div>
+        <div class="col"><h5>Your card</h5></div>
+        <div class="col"><h5>Their card</h5></div>    
+        <?php
+        if ($who) {
+            echo '<div class="col"><h5>' . _("Cancel Trade") . "</h5></div>";
+        } else {
+            echo '<div class="col"><h5>' . _("Accept Trade") . "</h5></div>";
+        }
+        echo "</div>";
 
-/**
- * Returns the username from given userid
- */
-function getUsername($id) {
-    $sql = "SELECT username FROM users WHERE id = " . $id . " LIMIT 1";
-    $statement = $GLOBALS['pdo']->prepare($sql);
-    $result = $statement->execute();
-    while ($row = $statement->fetch()) {
-        return $row["username"];
+        //This SQL query is pure hell.
+        $sql = "SELECT a.TradeID, a.username, a.MasterShortName AS MyMaster, a.CardMasterSubID AS MyCard, "
+                . "masters.MasterShortName AS YourMaster, cards.CardMasterSubID AS YourCard "
+                . "FROM trades "
+                . "INNER JOIN cards ON trades.TradeCardOther = cards.CardID "
+                . "INNER JOIN masters ON masters.MasterID = cards.MasterID "
+                . "INNER JOIN("
+                . "SELECT TradeID, TradeUserOther, TradeUserSelf, TradeCardOther, TradeCardSelf, users.username, "
+                . "masters.MasterShortName, cards.CardMasterSubID "
+                . "FROM trades "
+                . "INNER JOIN users ON trades." . $srrev . " = users.id "
+                . "INNER JOIN cards ON trades.TradeCardSelf = cards.CardID "
+                . "INNER JOIN masters ON masters.MasterID = cards.MasterID "
+                . "WHERE " . $sr . " = " . $uid . " AND TradeOpen = 1) a "
+                . "ON a.TradeID = trades.TradeID "
+                . "WHERE trades." . $sr . " = " . $uid . " AND trades.TradeOpen = 1";
+
+        $statement = $GLOBALS['pdo']->prepare($sql);
+        $result = $statement->execute();
+        while ($row = $statement->fetch()) {
+            echo '<div class="row">';
+            //The fields are ordered differently, if you sent/received a trade
+            if ($who) {
+                echo '<div class="col">' . $row["username"] . "</div>";
+                echo '<div class="col">' . $row["MyMaster"] . $row["MyCard"] . "</div>";
+                echo '<div class="col">' . $row["YourMaster"] . $row["YourCard"] . "</div>";
+                echo '<div class="col"><a href="trades.php?trade=' . $row["TradeID"] . '">' . _("Cancel Trade") . "</a></div>";
+            } else {
+                echo '<div class="col">' . $row["username"] . "</div>";
+                echo '<div class="col">' . $row["MyMaster"] . $row["MyCard"] . "</div>";
+                echo '<div class="col">' . $row["YourMaster"] . $row["YourCard"] . "</div>";
+                echo '<div class="col"><a href="trades.php?trade=' . $row["TradeID"] . '">' . _("Accept Trade") . "</a></div>";
+            }
+            echo "</div>";
+        }
     }
 
-    return "";
-}
+    /**
+     * Returns the current storage id
+     */
+    function getStorageID() {
+        $storageID = $GLOBALS['basestorage']; //ID of "New"
+        if (isset($_GET["storage"])) {
+            $storageID = htmlspecialchars($_GET["storage"]);
+        }
 
-/**
- * Lists all users
- */
-function listAllUsers() {
-    $sql = "SELECT id, username FROM users";
-    $statement = $GLOBALS['pdo']->prepare($sql);
-    $result = $statement->execute();
-    while ($row = $statement->fetch()) {
-        echo '<a href="user.php?id=' . $row["id"] . '">' . $row["username"] . '</a>';
-        echo "<br>";
+        return $storageID;
     }
-}
-?>
+
+    /**
+     * Returns the username from given userid
+     */
+    function getUsername($id) {
+        $sql = "SELECT username FROM users WHERE id = " . $id . " LIMIT 1";
+        $statement = $GLOBALS['pdo']->prepare($sql);
+        $result = $statement->execute();
+        while ($row = $statement->fetch()) {
+            return $row["username"];
+        }
+
+        return "";
+    }
+
+    /**
+     * Lists all users
+     */
+    function listAllUsers() {
+        $sql = "SELECT id, username FROM users";
+        $statement = $GLOBALS['pdo']->prepare($sql);
+        $result = $statement->execute();
+        while ($row = $statement->fetch()) {
+            echo '<a href="user.php?id=' . $row["id"] . '">' . $row["username"] . '</a>';
+            echo "<br>";
+        }
+    }
+    ?>
 
